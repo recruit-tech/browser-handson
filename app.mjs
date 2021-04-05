@@ -16,9 +16,12 @@ const reqs = on(
 
 
 function isLogin(req) {
-  // TODO: check request cookie
-  console.log(req.headers);
-  // ここで cookie をチェックして sessionid が有効なら true にしてください。
+  const cookie = req.headers.cookie.split(";").map((c) => c.trim().split("="));
+  for (const [id, value] of cookie) {
+    if (id === "session_id" && value === "1") {
+      return true;
+    }
+  }
   return false;
 }
 
@@ -47,12 +50,17 @@ async function postLogin(req, res) {
     req.on("data", (d) => { data += d });
     req.on("end", () => {
       console.log(data);
-      // TODO: ここのデータのパースをしてください。
-      // ここで、リクエストの内容を取り出してIDとpasswordをチェックしてください。
-      // IDは yuki@example.com パスワードは yUki0525! ということにします。
-      res.writeHead(401);
-      // TODO: check login request and set cookie
-      res.end("Unauthorized");
+      const [id, password] = data.split("&").map((item) => item.split("=")[1]);
+      if (id !== "yuki%40example.com" || password !== "yUki0525%21") {
+        res.writeHead(401);
+        res.end("Unauthorized");
+      } else {
+        res.writeHead(302, {
+          "Location": "/",
+          "Set-Cookie": "session_id=1",
+        });
+        res.end();
+      }
       resolve();
     });
   });
