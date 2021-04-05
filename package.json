@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/recruit-tech/browser-handson#readme",
   "dependencies": {
-    "mime-types": "^2.1.30"
+    "mime-types": "^2.1.30",
+    "mkcert": "^1.4.0"
   }
 }

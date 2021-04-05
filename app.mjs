@@ -1,12 +1,16 @@
+import { readFileSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
-import { createServer } from 'http';
+import { createServer } from 'https';
 import { on } from 'events';
 import mime from 'mime-types';
 
 const port = 3000;
 const reqs = on(
-  createServer().listen(port), 
+  createServer({
+    key: readFileSync("./cert.key"),
+    cert: readFileSync("./cert.crt"),
+  }).listen(port), 
   'request'
 );
 
