@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>ログインフォーム</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js"></script>
+  </head>  
+  <body>
+
+    <form action="/login" method="post">
+      
+      <h1>ログイン</h1>
+
+      <section>        
+        <label for="id">ID</label>
+        <input id="id" name="id" type="email" placeholder=" " autocomplete="username" required>
+      </section>
+            
+      <section>        
+        <label for="current-password">Password</label>
+        <input id="current-password" name="current-password" type="password" autocomplete="current-password" aria-describedby="password-constraints" required>
+        <button id="toggle-password" type="button" aria-label="Show password as plain text. Warning: this will display your password on the screen.">Show password</button>
+        <div id="password-constraints">8文字以上で英語の大小文字と記号を入れてください</div>
+      </section>
+      <button id="login">Login</button>
+    </form>
+  </body>
+</html>
