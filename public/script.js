@@ -20,10 +20,21 @@ function togglePassword() {
   }
 }
 
-// TODO: もしもできたらこのパスワードの動的チェックに挑戦してみてください。
 passwordInput.addEventListener('input', validatePassword);
 
 function validatePassword() {
+  let message= '';
+  if (!/.{8,}/.test(passwordInput.value)) {
+		message = '8文字以上入力してください。';
+  } else if (!/.*[A-Z].*/.test(passwordInput.value)) {
+		message += '\n少なくとも一文字は大文字にしてください。';
+  } else if (!/.*[a-z].*/.test(passwordInput.value)) {
+		message += '\n少なくとも一文字は小文字にしてください。';
+  } else if (!/.*[~!@#$%^&*()].*/.test(passwordInput.value)) {
+		message += '\n記号を入れてください。';
+  }
+
+  passwordInput.setCustomValidity(message);
 }
 
 form.addEventListener('submit', handleFormSubmit);                       
@@ -32,10 +43,6 @@ function handleFormSubmit(event) {
   console.log('submit');
   if (form.checkValidity() === false) {
     console.log('not valid');
-    event.preventDefault();
-  } else {
-    // On a production site do form submission.
-    signinButton.disabled = 'true';
     event.preventDefault();
   }
 }
