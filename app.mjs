@@ -61,9 +61,9 @@ async function postLogin(req, res) {
 async function staticFile(url, req, res) {
   try {
     const content = await readFile(resolve("./public", url.pathname.slice(1)));
-    // TODO: ここに Cache Control を入れてコンテンツをキャッシュさせてみてください。
     res.writeHead(200, {
       "Content-Type": mime.lookup(url.pathname),
+      "Cache-Control": "max-age=600",
     });
     res.end(content);
   } catch (e) {
